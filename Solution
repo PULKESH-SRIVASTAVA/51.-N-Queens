@@ -1,0 +1,46 @@
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+     char[][] board=new char[n][n];
+        for(int i=0;i<n;i++){
+            Arrays.fill(board[i],'.');
+        }
+        List<List<String>> list=new ArrayList();
+        fillq(list,board,0,n);
+        return list;  
+    }
+    private void fillq(List<List<String>> list,char[][] board,int col,int n){
+        if(col==n){
+            list.add(lt(board));
+            return;
+        }
+        for(int row=0;row<n;row++){
+            if(issafe(board,row,col)){
+                board[row][col]='Q';
+                fillq(list,board,col+1,n);
+                board[row][col]='.';
+            }
+        }
+    }
+    private boolean issafe(char[][] board,int row,int col){
+        for(int i=col-1;i>=0;i--){
+            if(board[row][i]=='Q')
+                return false;
+        }
+        for(int i=row-1,j=col-1;i>=0 && j>=0;i--,j--){
+            if(board[i][j]=='Q')
+                return false;
+        }
+        for(int i=row+1,j=col-1;i<board.length && j>=0;i++,j--){
+            if(board[i][j]=='Q')
+                return false;
+        }
+        return true;
+    }
+    private List<String> lt(char[][] board){
+        List<String> lis=new ArrayList();
+        for(int i=0;i<board.length;i++){
+            lis.add(new String(board[i]));
+        }
+        return lis;
+    }
+}
